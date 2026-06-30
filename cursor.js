@@ -19,7 +19,7 @@
   var flag = document.createElement('div');
   flag.className = 'cursor-flag';
   flag.innerHTML =
-    '<svg viewBox="0 0 220 160" width="32" height="23" aria-hidden="true">' +
+    '<svg viewBox="0 0 220 160" width="16" height="12" aria-hidden="true">' +
     '<rect width="220" height="160" fill="#E42F28"/>' +
     '<rect x="60" width="40" height="160" fill="#fff"/>' +
     '<rect y="60" width="220" height="40" fill="#fff"/>' +

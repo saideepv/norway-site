@@ -601,8 +601,8 @@ html.cursor-flag-active .cursor-dot,
 html.cursor-flag-active .cursor-ring { opacity: 0; }
 
 .cursor-flag {
-  width: 32px; height: 23px;
-  margin: -11px 0 0 -16px;
+  width: 16px; height: 12px;
+  margin: -6px 0 0 -8px;
   filter: drop-shadow(0 2px 6px rgba(var(--color-ink-rgb), 0.35));
 }
 
