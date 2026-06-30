@@ -1,0 +1,561 @@
+/* ==========================================================================
+   PORTFOLIO-DS — Saideep × Norway design system
+   One shared stylesheet for index.html, aboutme.html, whynorway.html.
+
+   Structure:
+   1. TOKENS     — primitives, then semantic tokens built on top of them
+   2. BASE       — reset + global element defaults
+   3. ATOMS      — smallest reusable pieces (logo, nav link, button, tag, icon sizing, progress bar)
+   4. MOLECULES  — page-specific composite components (cards), grouped by the page they belong to
+   5. TEMPLATES  — page-level containers. A few values (section-title size, .page gap, .connect
+                   container) genuinely differ per page, so those are scoped under body.page-home /
+                   body.page-about / body.page-why rather than forced into one shared value.
+   6. RESPONSIVE — breakpoints: ≤960px (tablet), ≤600px (mobile)
+
+   Each HTML page needs exactly one line in <head>:
+     <link rel="stylesheet" href="portfolio-ds.css" />
+   and a page-identifying class on <body>: page-home / page-about / page-why.
+   ========================================================================== */
+
+
+/* ── 1. TOKENS ─────────────────────────────────────────────────────────── */
+
+:root {
+  /* Primitives — raw values, not referenced directly outside this block */
+  --color-white:    #FFFFFF;
+  --color-gray-25:  #FDFDFF;
+  --color-gray-50:  #F7F7F7;
+  --color-gray-75:  #F0F4FF;
+  --color-gray-100: #EBEBEB;
+  --color-gray-150: #E8E8E8;
+  --color-gray-200: #DDDDDD;
+  --color-ink:      #0A0A14;
+  --color-ink-rgb:  10, 10, 20;
+  --color-black:    #000000;
+  --color-red-500:  #E42F28; /* Norway flag red — decorative accent only */
+  --color-blue-600: #205FAF; /* Norway flag blue — decorative accent only */
+
+  --font-sans:  'IBM Plex Sans', sans-serif;
+  --font-serif: Georgia, serif;
+
+  --font-size-11: 11px; --font-size-12: 12px; --font-size-13: 13px; --font-size-14: 14px;
+  --font-size-15: 15px; --font-size-16: 16px; --font-size-24: 24px; --font-size-28: 28px;
+  --font-size-30: 30px; --font-size-32: 32px; --font-size-36: 36px; --font-size-40: 40px;
+  --font-size-48: 48px; --font-size-56: 56px;
+
+  --font-weight-regular: 400; --font-weight-medium: 500;
+  --font-weight-semibold: 600; --font-weight-bold: 700;
+
+  --line-height-tight: 1.05; --line-height-snug: 1.3; --line-height-normal: 1.5;
+  --line-height-relaxed: 1.6; --line-height-loose: 1.7;
+
+  --tracking-tight: -0.02em; --tracking-snug: -0.01em;
+  --tracking-wide: 0.03em; --tracking-wider: 0.08em;
+
+  /* Spacing — 8px base unit. --space-half is the one sanctioned exception
+     for micro adjustments (icon gaps); never use it between cards/sections. */
+  --space-half: 4px; --space-1: 8px; --space-2: 16px; --space-3: 24px;
+  --space-4: 32px; --space-5: 40px; --space-6: 48px; --space-7: 56px;
+  --space-8: 64px; --space-9: 72px; --space-10: 80px; --space-11: 96px;
+  --space-12: 120px; --space-13: 160px;
+
+  --radius-sm: 4px; --radius-md: 8px; --radius-full: 999px;
+  --ease-standard: 0.15s ease; --ease-standard-md: 0.2s ease;
+
+  /* Semantic — components should consume these, not the primitives above */
+  --color-bg-canvas:              var(--color-gray-25);
+  --color-bg-surface:              var(--color-gray-75);
+  --color-bg-card:                var(--color-gray-50);
+  --color-bg-tag:                 var(--color-gray-100);
+  --color-bg-image-placeholder:   var(--color-gray-150);
+  --color-bg-image-placeholder-2: var(--color-gray-200);
+  --color-bg-overlay-scrim:       rgba(0, 0, 0, 0.3);
+  --color-bg-overlay-scrim-hover: rgba(0, 0, 0, 0.45);
+  --color-bg-hover-wash:          rgba(var(--color-ink-rgb), 0.04);
+  --color-bg-track:               rgba(var(--color-ink-rgb), 0.12);
+
+  /* Text — contrast ratios measured against --color-bg-canvas (#FDFDFF) */
+  --color-text-primary:   var(--color-ink);                 /* 19.4:1 — AAA */
+  --color-text-secondary: rgba(var(--color-ink-rgb), 0.75); /* 9.1:1  — AAA */
+  --color-text-tertiary:  rgba(var(--color-ink-rgb), 0.6);  /* 5.2:1  — AA  */
+  --color-text-on-dark:   var(--color-white);
+  /* NOTE: components below still use 0.55 alpha in a couple of spots to match
+     today's live rendering exactly (mobile-nav inactive state, resume-icon
+     opacity). That measures ~4.36:1, just under AA's 4.5:1 floor for normal
+     text. --color-text-tertiary above is the corrected token (~5.2:1) — adopt
+     it the next time those specific rules get touched. */
+
+  --color-border: var(--color-gray-150);
+  --color-brand-red:  var(--color-red-500);
+  --color-brand-blue: var(--color-blue-600);
+
+  --space-page-margin:        var(--space-12);
+  --space-page-margin-tablet: var(--space-5);
+  --space-page-margin-mobile: var(--space-3);
+  --space-section-gap:        var(--space-10);
+  --space-card-padding-lg:    var(--space-4);
+  --space-card-padding-md:    var(--space-2);
+  --space-card-gap-roomy:     var(--space-10);
+  --space-card-gap-cozy:      var(--space-6);
+  --space-card-gap-tight:     var(--space-4);
+
+  --radius-card: var(--radius-md);
+  --radius-pill: var(--radius-full);
+}
+
+
+/* ── 2. BASE ───────────────────────────────────────────────────────────── */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-bg-canvas);
+  color: var(--color-text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+a { text-decoration: none; color: inherit; }
+
+
+/* ── 3. ATOMS ──────────────────────────────────────────────────────────── */
+
+/* Logo / wordmark */
+.nav-logo {
+  font-size: var(--font-size-24);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  letter-spacing: var(--tracking-tight);
+  display: flex;
+  align-items: baseline;
+  gap: 3px; /* micro, intentionally off-grid */
+  font-family: var(--font-serif);
+}
+
+.nav-logo .logo-no {
+  font-size: var(--font-size-12);
+  font-weight: var(--font-weight-regular);
+  opacity: 0.6;
+  letter-spacing: var(--tracking-wide);
+}
+
+/* Desktop nav bar + nav links (identical on every page) */
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-page-margin);
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-text-primary);
+  opacity: 0.55;
+  text-decoration: none;
+  transition: opacity var(--ease-standard);
+}
+
+.nav-links a.active {
+  opacity: 1;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 13px;
+  text-decoration-color: var(--color-text-primary);
+}
+
+.nav-links a:hover:not(.active) {
+  opacity: 1;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 13px;
+  text-decoration-color: var(--color-text-primary);
+}
+
+/* Decorative hover-only flourish — Norway flag gradient text-fill.
+   Acceptable only as a transient hover state on a single nav word; never
+   use this as a resting/readable text color (contrast ~4.4:1, under AA). */
+.nav-links a.why-norway:hover {
+  background: linear-gradient(140deg, var(--color-brand-red) 58%, rgba(255,255,255,0.7) 68%, var(--color-brand-blue) 78%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  opacity: 1;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 13px;
+  text-decoration-color: var(--color-text-primary);
+}
+
+/* External-link icon (used inline next to "Resume" in both nav variants) */
+.icon-external-link { opacity: 0.55; vertical-align: middle; margin-left: 2px; }
+
+/* Pill tag — work-tag is the only background-filled pill in the system */
+.work-tag {
+  font-size: var(--font-size-12);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-text-secondary);
+  background: var(--color-bg-tag);
+  padding: var(--space-half) 10px;
+  border-radius: var(--radius-pill);
+  display: inline-block;
+}
+
+/* Outline button — "View Case Study →" */
+.work-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-2);
+  border: 1px dashed var(--color-text-primary);
+  border-radius: var(--radius-card);
+  font-size: var(--font-size-14);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-text-primary);
+  background: transparent;
+  cursor: pointer;
+  transition: background var(--ease-standard);
+  text-decoration: none;
+}
+
+.work-btn:hover { background: var(--color-bg-hover-wash); }
+.work-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+/* Play button — overlays a video thumbnail */
+.play-btn {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg-overlay-scrim);
+  transition: background var(--ease-standard-md);
+}
+
+.play-btn:hover { background: var(--color-bg-overlay-scrim-hover); }
+.play-btn svg { width: 48px; height: 48px; fill: var(--color-text-on-dark); opacity: 0.9; }
+
+/* Progress bar — language proficiency indicator */
+.lang-bar-wrap { margin-top: var(--space-half); }
+
+.lang-bar {
+  height: 4px;
+  background: var(--color-bg-track);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+.lang-bar-fill {
+  height: 100%;
+  background: var(--color-text-primary);
+  border-radius: var(--radius-pill);
+}
+
+.lang-label { font-size: var(--font-size-11); color: var(--color-text-tertiary); margin-top: 6px; }
+
+/* Mobile bottom nav bar (identical on every page once standardized —
+   index.html previously had a stray flex-column rule here with no icons
+   to justify it; removed for consistency, no visual change) */
+.mobile-nav {
+  display: none;
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  z-index: 100;
+  background: var(--color-bg-canvas);
+  border-top: 1px solid var(--color-border);
+  padding: 12px 0 env(safe-area-inset-bottom, 12px);
+  justify-content: space-around;
+  align-items: center;
+}
+
+.mobile-nav a {
+  font-size: var(--font-size-12);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-text-primary);
+  text-decoration: none;
+}
+
+.mobile-nav a.active {
+  text-decoration: underline;
+  text-decoration-style: solid;
+  text-underline-offset: 3px;
+}
+
+/* Connect block — inner elements (shared verbatim across all 3 pages;
+   the outer container is scoped per page in §5 TEMPLATES) */
+.connect h2 { font-size: var(--font-size-32); font-weight: var(--font-weight-bold); letter-spacing: var(--tracking-tight); }
+
+.connect-sub {
+  font-size: var(--font-size-14);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-relaxed);
+  max-width: 520px;
+  margin-top: -16px; /* micro, intentionally off-grid: pulls sub-line closer to heading */
+}
+
+.connect-links { display: flex; flex-direction: column; align-items: center; gap: var(--space-1); }
+
+.connect-links a {
+  font-size: var(--font-size-14);
+  color: var(--color-text-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.connect-social { display: flex; gap: var(--space-3); }
+.connect-social a { font-size: var(--font-size-14); color: var(--color-text-primary); text-decoration: none; }
+
+/* Footer (identical on every page) */
+footer {
+  text-align: center;
+  padding: var(--space-3) var(--space-page-margin);
+  font-size: var(--font-size-12);
+  color: var(--color-text-tertiary);
+}
+
+
+/* ── 4. MOLECULES ──────────────────────────────────────────────────────── */
+
+/* — Home: hero — */
+.hero {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: var(--space-13) var(--space-page-margin) var(--space-12);
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px; /* micro, intentionally off-grid */
+}
+
+.hero-text { flex: 1; }
+
+.hero h1 {
+  font-size: var(--font-size-56);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--tracking-tight);
+  margin-bottom: var(--space-2);
+}
+
+.hero-sub { font-size: var(--font-size-14); color: var(--color-text-tertiary); line-height: var(--line-height-relaxed); }
+.hero-prev { font-size: var(--font-size-14); color: var(--color-text-tertiary); margin-top: var(--space-4); }
+.hero-prev-companies { color: var(--color-text-primary); font-weight: var(--font-weight-semibold); }
+
+.hero-photo {
+  width: 28%;
+  flex-shrink: 0;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  background: var(--color-bg-card);
+  aspect-ratio: 4/3.5;
+}
+
+.hero-photo img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  filter: grayscale(100%);
+  display: block;
+}
+
+/* — Home: work cards — */
+.work-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-card-gap-roomy); }
+
+.work-card {
+  background: var(--color-bg-card);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  cursor: pointer;
+  transition: opacity var(--ease-standard-md);
+}
+
+.work-card:hover { opacity: 0.85; }
+
+.work-card-image { width: 42%; flex-shrink: 0; overflow: hidden; background: var(--color-bg-image-placeholder); }
+.work-card-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.work-card-content {
+  flex: 1;
+  padding: var(--space-card-padding-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  align-items: flex-start;
+}
+
+.work-card-body { display: flex; flex-direction: column; gap: var(--space-1); }
+.work-card-body h3 { font-size: var(--font-size-16); font-weight: var(--font-weight-bold); line-height: var(--line-height-snug); letter-spacing: var(--tracking-snug); color: var(--color-text-primary); }
+.work-card-body p { font-size: var(--font-size-13); color: var(--color-text-secondary); line-height: var(--line-height-relaxed); }
+
+/* — Home: "why norway" preview cards — */
+.why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-card-gap-tight); }
+.why-card { background: var(--color-bg-card); border-radius: var(--radius-card); padding: var(--space-card-padding-lg); }
+.why-card.full { grid-column: 1 / -1; }
+.why-card .icon { font-size: var(--font-size-24); margin-bottom: var(--space-2); }
+.why-card h3 { font-size: var(--font-size-16); font-weight: var(--font-weight-bold); line-height: var(--line-height-snug); margin-bottom: 10px; letter-spacing: var(--tracking-snug); }
+.why-card p { font-size: var(--font-size-14); color: var(--color-text-secondary); line-height: var(--line-height-loose); }
+
+/* — Home: journey cards — */
+.journey-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-card-gap-tight); }
+.journey-card { background: var(--color-bg-card); border-radius: var(--radius-card); overflow: hidden; }
+.journey-card-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; background: var(--color-bg-image-placeholder-2); }
+.journey-card-body { padding: var(--space-2); display: flex; flex-direction: column; gap: 6px; }
+.journey-tag { font-size: var(--font-size-11); font-weight: var(--font-weight-semibold); color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: var(--tracking-wider); }
+.journey-card-body h3 { font-size: var(--font-size-15); font-weight: var(--font-weight-bold); line-height: var(--line-height-snug); color: var(--color-text-primary); }
+.journey-card-body p { font-size: var(--font-size-13); color: var(--color-text-secondary); line-height: var(--line-height-relaxed); }
+
+/* — About: teaching — */
+.teaching-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-card-gap-cozy); }
+.teaching-item { display: flex; flex-direction: column; gap: var(--space-1); }
+
+.video-wrap { position: relative; border-radius: var(--radius-card); overflow: hidden; background: var(--color-black); aspect-ratio: 16/9; }
+.video-wrap video { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.designerrs-wrap {
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  aspect-ratio: 16/9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+}
+.designerrs-wrap img { max-width: 70%; max-height: 70%; object-fit: contain; }
+
+.item-label { font-size: var(--font-size-12); color: var(--color-text-tertiary); line-height: var(--line-height-normal); }
+
+/* — About: reading — */
+.reading-section { background: var(--color-bg-canvas); padding: var(--space-4) 0; }
+.reading-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-card-gap-cozy); }
+.book-item { display: flex; flex-direction: column; gap: var(--space-1); }
+.book-cover { border-radius: var(--radius-card); overflow: hidden; background: var(--color-bg-card); aspect-ratio: 3/4; max-height: 280px; }
+.book-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.book-tag { font-size: var(--font-size-12); color: var(--color-text-tertiary); }
+.book-title { font-size: var(--font-size-14); font-weight: var(--font-weight-medium); color: var(--color-text-primary); }
+
+/* — About: hobbies — */
+.hobbies-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-card-gap-cozy); }
+.hobby-item { display: flex; flex-direction: column; gap: var(--space-1); }
+.hobby-img { border-radius: var(--radius-card); overflow: hidden; background: var(--color-bg-card); aspect-ratio: 4/3; max-height: 220px; }
+.hobby-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.hobby-tag { font-size: var(--font-size-12); color: var(--color-text-tertiary); }
+.hobby-title { font-size: var(--font-size-14); font-weight: var(--font-weight-medium); color: var(--color-text-primary); }
+
+/* — Why Norway: hero — */
+.hero-block { display: flex; flex-direction: column; gap: var(--space-2); }
+.hero-block h1 { font-size: var(--font-size-48); font-weight: var(--font-weight-bold); line-height: var(--line-height-tight); letter-spacing: var(--tracking-tight); max-width: 720px; }
+.hero-block p { font-size: var(--font-size-16); color: var(--color-text-secondary); line-height: var(--line-height-loose); max-width: 620px; }
+
+/* — Why Norway: reason cards — */
+.reason-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-card-gap-tight); }
+.reason-card { background: var(--color-bg-card); border-radius: var(--radius-card); padding: var(--space-card-padding-lg); display: flex; flex-direction: column; gap: 12px; }
+.reason-card.full { grid-column: 1 / -1; }
+.reason-card .icon { font-size: var(--font-size-24); }
+.reason-card h3 { font-size: var(--font-size-16); font-weight: var(--font-weight-bold); line-height: var(--line-height-snug); letter-spacing: var(--tracking-snug); }
+.reason-card p { font-size: var(--font-size-14); color: var(--color-text-secondary); line-height: var(--line-height-loose); }
+
+/* — Why Norway: stat row — */
+.stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-card-gap-tight); }
+.stat-card { background: var(--color-bg-card); border-radius: var(--radius-card); padding: var(--space-card-padding-lg); display: flex; flex-direction: column; gap: var(--space-1); }
+.stat-number { font-size: var(--font-size-36); font-weight: var(--font-weight-bold); letter-spacing: -0.03em; }
+.stat-label { font-size: var(--font-size-14); color: var(--color-text-secondary); line-height: var(--line-height-normal); }
+
+/* — Why Norway: culture grid — */
+.culture-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-card-gap-tight); }
+.culture-card { background: var(--color-bg-card); border-radius: var(--radius-card); overflow: hidden; }
+.culture-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; background: var(--color-bg-image-placeholder-2); }
+.culture-body { padding: var(--space-2); display: flex; flex-direction: column; gap: 6px; }
+.culture-tag { font-size: var(--font-size-11); font-weight: var(--font-weight-semibold); color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: var(--tracking-wider); }
+.culture-body h3 { font-size: var(--font-size-15); font-weight: var(--font-weight-bold); line-height: var(--line-height-snug); }
+.culture-body p { font-size: var(--font-size-13); color: var(--color-text-secondary); line-height: var(--line-height-relaxed); }
+
+
+/* ── 5. TEMPLATES ──────────────────────────────────────────────────────── */
+
+/* Home: per-section container (no single .page wrapper on this page) */
+body.page-home .section { max-width: 1440px; margin: 0 auto; padding: var(--space-10) var(--space-page-margin); }
+body.page-home .section-title { font-size: var(--font-size-24); font-weight: var(--font-weight-bold); letter-spacing: var(--tracking-snug); margin-bottom: var(--space-5); }
+body.page-home .connect { max-width: 1440px; margin: 0 auto; padding: var(--space-10) var(--space-page-margin); text-align: center; display: flex; flex-direction: column; align-items: center; gap: var(--space-4); }
+
+/* About: single flex-column .page wrapper */
+body.page-about .page { max-width: 1440px; margin: 0 auto; padding: var(--space-10) var(--space-page-margin); display: flex; flex-direction: column; gap: var(--space-10); }
+body.page-about .section-title { font-size: var(--font-size-24); font-weight: var(--font-weight-bold); letter-spacing: var(--tracking-snug); margin-bottom: var(--space-3); }
+body.page-about .connect { text-align: center; display: flex; flex-direction: column; align-items: center; gap: var(--space-4); padding-bottom: 0; }
+
+/* Why Norway: same .page pattern as About, but roomier vertical rhythm and a larger section title */
+body.page-why .page { max-width: 1440px; margin: 0 auto; padding: var(--space-10) var(--space-page-margin); display: flex; flex-direction: column; gap: var(--space-13); }
+body.page-why .section-title { font-size: var(--font-size-28); font-weight: var(--font-weight-bold); letter-spacing: var(--tracking-snug); margin-bottom: var(--space-3); }
+body.page-why .connect { text-align: center; display: flex; flex-direction: column; align-items: center; gap: var(--space-4); padding-bottom: 0; }
+
+
+/* ── 6. RESPONSIVE ─────────────────────────────────────────────────────── */
+
+@media (max-width: 960px) {
+  nav { padding: var(--space-5) var(--space-page-margin-tablet); }
+  footer { padding: var(--space-3) var(--space-page-margin-tablet); }
+
+  body.page-home .hero { padding: var(--space-9) var(--space-page-margin-tablet) var(--space-6); }
+  body.page-home .hero h1 { font-size: var(--font-size-40); }
+  body.page-home .hero-photo { width: 36%; }
+  body.page-home .section { padding: var(--space-6) var(--space-page-margin-tablet); }
+  body.page-home .work-grid { grid-template-columns: 1fr; gap: var(--space-3); }
+  body.page-home .why-grid { grid-template-columns: 1fr; }
+  body.page-home .why-card.full { grid-column: 1; }
+  body.page-home .journey-grid { grid-template-columns: 1fr 1fr; }
+  body.page-home .connect { padding: var(--space-6) var(--space-page-margin-tablet); }
+
+  body.page-about .page,
+  body.page-why .page { padding: var(--space-6) var(--space-page-margin-tablet); gap: var(--space-6); }
+  body.page-about .teaching-grid { grid-template-columns: 1fr; }
+  body.page-about .reading-grid { grid-template-columns: 1fr 1fr; }
+  body.page-about .hobbies-grid { grid-template-columns: 1fr 1fr; }
+
+  body.page-why .hero-block h1 { font-size: var(--font-size-36); }
+  body.page-why .reason-grid { grid-template-columns: 1fr; }
+  body.page-why .reason-card.full { grid-column: 1; }
+  body.page-why .stat-row { grid-template-columns: 1fr 1fr; }
+  body.page-why .culture-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 600px) {
+  nav { display: none; }
+  .mobile-nav { display: flex; }
+  body { padding-bottom: var(--space-9); }
+  footer { padding: var(--space-2) var(--space-page-margin-mobile); }
+
+  body.page-home .hero { padding: var(--space-5) var(--space-page-margin-mobile) var(--space-4); flex-direction: column-reverse; }
+  body.page-home .hero-photo { width: 100%; aspect-ratio: 16/9; }
+  body.page-home .hero h1 { font-size: var(--font-size-30); }
+  body.page-home .section { padding: var(--space-5) var(--space-page-margin-mobile); }
+  body.page-home .work-card { flex-direction: column; }
+  body.page-home .work-card-image { width: 100%; height: 180px; }
+  body.page-home .journey-grid { grid-template-columns: 1fr; }
+  body.page-home .connect { padding: var(--space-5) var(--space-page-margin-mobile); }
+
+  body.page-about .page,
+  body.page-why .page { padding: var(--space-5) var(--space-page-margin-mobile); gap: var(--space-6); }
+  body.page-about .reading-grid { grid-template-columns: 1fr; }
+  body.page-about .hobbies-grid { grid-template-columns: 1fr; }
+
+  body.page-why .hero-block h1 { font-size: var(--font-size-28); }
+  body.page-why .stat-row { grid-template-columns: 1fr; }
+  body.page-why .culture-grid { grid-template-columns: 1fr; }
+}
+
+@media (min-width: 601px) {
+  .mobile-nav { display: none; }
+}
