@@ -132,7 +132,7 @@ a { text-decoration: none; color: inherit; }
   font-family: var(--font-serif);
 }
 
-.nav-logo .logo-no {
+.nav-logo .logo-suffix {
   font-size: var(--font-size-12);
   font-weight: var(--font-weight-regular);
   opacity: 0.6;
@@ -174,21 +174,6 @@ nav {
 }
 
 .nav-links a:hover:not(.active) {
-  opacity: 1;
-  text-decoration: underline;
-  text-decoration-style: dotted;
-  text-underline-offset: 13px;
-  text-decoration-color: var(--color-text-primary);
-}
-
-/* Decorative hover-only flourish — Norway flag gradient text-fill.
-   Acceptable only as a transient hover state on a single nav word; never
-   use this as a resting/readable text color (contrast ~4.4:1, under AA). */
-.nav-links a.why-norway:hover {
-  background: linear-gradient(140deg, var(--color-brand-red) 58%, rgba(255,255,255,0.7) 68%, var(--color-brand-blue) 78%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
   opacity: 1;
   text-decoration: underline;
   text-decoration-style: dotted;
@@ -260,7 +245,7 @@ nav {
   border-radius: var(--radius-pill);
 }
 
-.lang-label { font-size: var(--font-size-11); color: var(--color-text-tertiary); margin-top: 6px; }
+.lang-label { font-size: var(--font-size-13); color: var(--color-text-tertiary); margin-top: 6px; }
 
 /* Mobile bottom nav bar (identical on every page once standardized —
    index.html previously had a stray flex-column rule here with no icons
@@ -397,7 +382,7 @@ footer {
 
 .work-card-body { display: flex; flex-direction: column; gap: var(--space-1); }
 .work-card-body h3 { font-size: var(--font-size-16); font-weight: var(--font-weight-bold); line-height: var(--line-height-snug); letter-spacing: var(--tracking-snug); color: var(--color-text-primary); }
-.work-card-body p { font-size: var(--font-size-13); color: var(--color-text-secondary); line-height: var(--line-height-relaxed); }
+.work-card-body p { font-size: var(--font-size-14); color: var(--color-text-secondary); line-height: var(--line-height-relaxed); }
 
 /* — Home: "why norway" preview cards — */
 .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-card-gap-tight); }
@@ -412,9 +397,9 @@ footer {
 .journey-card { background: var(--color-bg-card); border-radius: var(--radius-card); overflow: hidden; }
 .journey-card-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; background: var(--color-bg-image-placeholder-2); }
 .journey-card-body { padding: var(--space-2); display: flex; flex-direction: column; gap: 6px; }
-.journey-tag { font-size: var(--font-size-11); font-weight: var(--font-weight-semibold); color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: var(--tracking-wider); }
+.journey-tag { font-size: var(--font-size-12); font-weight: var(--font-weight-semibold); color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: var(--tracking-wider); }
 .journey-card-body h3 { font-size: var(--font-size-15); font-weight: var(--font-weight-bold); line-height: var(--line-height-snug); color: var(--color-text-primary); }
-.journey-card-body p { font-size: var(--font-size-13); color: var(--color-text-secondary); line-height: var(--line-height-relaxed); }
+.journey-card-body p { font-size: var(--font-size-14); color: var(--color-text-secondary); line-height: var(--line-height-relaxed); }
 
 /* — About: teaching — */
 .teaching-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-card-gap-cozy); }
@@ -436,7 +421,7 @@ footer {
 }
 .designerrs-wrap img { max-width: 70%; max-height: 70%; object-fit: contain; }
 
-.item-label { font-size: var(--font-size-12); color: var(--color-text-tertiary); line-height: var(--line-height-normal); }
+.item-label { font-size: var(--font-size-14); color: var(--color-text-secondary); line-height: var(--line-height-normal); }
 
 /* — About: reading — */
 .reading-section { background: var(--color-bg-canvas); padding: var(--space-4) 0; }
@@ -444,7 +429,7 @@ footer {
 .book-item { display: flex; flex-direction: column; gap: var(--space-1); }
 .book-cover { border-radius: var(--radius-card); overflow: hidden; background: var(--color-bg-card); aspect-ratio: 3/4; max-height: 280px; }
 .book-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.book-tag { font-size: var(--font-size-12); color: var(--color-text-tertiary); }
+.book-tag { font-size: var(--font-size-13); color: var(--color-text-tertiary); }
 .book-title { font-size: var(--font-size-14); font-weight: var(--font-weight-medium); color: var(--color-text-primary); }
 
 /* — About: hobbies — */
@@ -452,8 +437,8 @@ footer {
 .hobby-item { display: flex; flex-direction: column; gap: var(--space-1); }
 .hobby-img { border-radius: var(--radius-card); overflow: hidden; background: var(--color-bg-card); aspect-ratio: 4/3; max-height: 220px; padding: var(--space-2); }
 .hobby-img img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: var(--radius-sm); }
-.hobby-tag { font-size: var(--font-size-12); color: var(--color-text-tertiary); }
-.hobby-title { font-size: var(--font-size-14); font-weight: var(--font-weight-medium); color: var(--color-text-primary); }
+.hobby-tag { font-size: var(--font-size-15); color: var(--color-text-tertiary); }
+.hobby-title { font-size: var(--font-size-16); font-weight: var(--font-weight-medium); color: var(--color-text-primary); }
 
 /* — Why Norway: hero — */
 .hero-block { display: flex; flex-direction: column; gap: var(--space-2); }
@@ -479,9 +464,9 @@ footer {
 .culture-card { background: var(--color-bg-card); border-radius: var(--radius-card); overflow: hidden; }
 .culture-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; background: var(--color-bg-image-placeholder-2); }
 .culture-body { padding: var(--space-2); display: flex; flex-direction: column; gap: 6px; }
-.culture-tag { font-size: var(--font-size-11); font-weight: var(--font-weight-semibold); color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: var(--tracking-wider); }
+.culture-tag { font-size: var(--font-size-12); font-weight: var(--font-weight-semibold); color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: var(--tracking-wider); }
 .culture-body h3 { font-size: var(--font-size-15); font-weight: var(--font-weight-bold); line-height: var(--line-height-snug); }
-.culture-body p { font-size: var(--font-size-13); color: var(--color-text-secondary); line-height: var(--line-height-relaxed); }
+.culture-body p { font-size: var(--font-size-14); color: var(--color-text-secondary); line-height: var(--line-height-relaxed); }
 
 
 /* ── 5. TEMPLATES ──────────────────────────────────────────────────────── */
@@ -562,48 +547,16 @@ body.page-why .connect { text-align: center; display: flex; flex-direction: colu
 
 
 /* ── 7. CUSTOM CURSOR ──────────────────────────────────────────────────── */
-/* Activated by cursor.js only on desktop / fine-pointer / motion-safe
-   contexts. Without JS, or on touch/mobile/reduced-motion, none of this
-   applies and the native cursor is left untouched. */
+/* Only the country flag on .why-norway hover. Native cursor everywhere else. */
 
-.custom-cursor-active,
-.custom-cursor-active * { cursor: none; }
-
-.cursor-dot, .cursor-ring, .cursor-flag {
+.cursor-flag {
   position: fixed;
   top: 0; left: 0;
   pointer-events: none;
   z-index: 9999;
   opacity: 0;
   transition: opacity var(--ease-standard);
-}
-
-html.cursor-visible .cursor-dot,
-html.cursor-visible .cursor-ring { opacity: 1; }
-
-.cursor-dot {
-  width: 8px; height: 8px;
-  margin: -4px 0 0 -4px;
-  border-radius: var(--radius-full);
-  background: var(--color-text-primary);
-}
-
-.cursor-ring {
-  width: 32px; height: 32px;
-  margin: -16px 0 0 -16px;
-  border-radius: var(--radius-full);
-  border: 1px solid var(--color-text-primary);
-  transition: opacity var(--ease-standard), transform 0.05s linear;
-}
-
-/* Why Norway hover — swap dot + ring for the flag */
-html.cursor-flag-active .cursor-dot,
-html.cursor-flag-active .cursor-ring { opacity: 0; }
-
-.cursor-flag {
-  width: 16px; height: 12px;
-  margin: -6px 0 0 -8px;
-  filter: drop-shadow(0 2px 6px rgba(var(--color-ink-rgb), 0.35));
+  filter: drop-shadow(0 1px 3px rgba(var(--color-ink-rgb), 0.3));
 }
 
 html.cursor-flag-active .cursor-flag { opacity: 1; }
