@@ -512,12 +512,12 @@ body.page-home .connect { max-width: 1440px; margin: 0 auto; padding: var(--spac
 /* About: single flex-column .page wrapper */
 body.page-about .page { max-width: 1440px; margin: 0 auto; padding: var(--space-10) var(--space-page-margin); display: flex; flex-direction: column; gap: var(--space-10); }
 body.page-about .section-title { font-size: var(--font-size-24); font-weight: var(--font-weight-bold); letter-spacing: var(--tracking-snug); margin-bottom: var(--space-3); }
-body.page-about .connect { text-align: center; display: flex; flex-direction: column; align-items: center; gap: var(--space-4); padding-bottom: 0; }
+body.page-about .connect { text-align: center; display: flex; flex-direction: column; align-items: center; gap: var(--space-4); padding-bottom: 0; margin-top: var(--space-3); }
 
 /* Why Norway: same .page pattern as About, but roomier vertical rhythm and a larger section title */
 body.page-why .page { max-width: 1440px; margin: 0 auto; padding: var(--space-10) var(--space-page-margin); display: flex; flex-direction: column; gap: var(--space-13); }
 body.page-why .section-title { font-size: var(--font-size-28); font-weight: var(--font-weight-bold); letter-spacing: var(--tracking-snug); margin-bottom: var(--space-3); }
-body.page-why .connect { text-align: center; display: flex; flex-direction: column; align-items: center; gap: var(--space-4); padding-bottom: 0; }
+body.page-why .connect { text-align: center; display: flex; flex-direction: column; align-items: center; gap: var(--space-4); padding-bottom: 0; margin-top: var(--space-3); }
 
 
 /* ── 6. RESPONSIVE ─────────────────────────────────────────────────────── */
