@@ -510,7 +510,7 @@ footer {
 .story-block { display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: var(--space-6); }
 .story-block-text { max-width: 420px; flex-shrink: 0; display: flex; flex-direction: column; gap: var(--space-2); }
 .story-block-text p { font-size: var(--font-size-16); color: var(--color-text-secondary); line-height: var(--line-height-loose); }
-.story-block-images { display: flex; gap: var(--space-3); flex: 1; }
+.story-block-images { display: flex; align-items: flex-start; gap: var(--space-3); flex: 1; }
 .story-block-images img { width: 50%; border-radius: var(--radius-card); object-fit: cover; display: block; }
 
 /* — Why Norway: stat row — */
