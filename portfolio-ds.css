@@ -506,6 +506,13 @@ footer {
 .reason-card h3 { font-size: var(--font-size-16); font-weight: var(--font-weight-bold); line-height: var(--line-height-snug); letter-spacing: var(--tracking-snug); }
 .reason-card p { font-size: var(--font-size-14); color: var(--color-text-secondary); line-height: var(--line-height-loose); }
 
+/* — Why Norway: story block — */
+.story-block { display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: var(--space-6); }
+.story-block-text { max-width: 420px; flex-shrink: 0; display: flex; flex-direction: column; gap: var(--space-2); }
+.story-block-text p { font-size: var(--font-size-16); color: var(--color-text-secondary); line-height: var(--line-height-loose); }
+.story-block-images { display: flex; gap: var(--space-3); flex: 1; }
+.story-block-images img { width: 50%; border-radius: var(--radius-card); object-fit: cover; display: block; }
+
 /* — Why Norway: stat row — */
 .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-card-gap-tight); }
 .stat-card { background: var(--color-bg-card); border-radius: var(--radius-card); padding: var(--space-card-padding-lg); display: flex; flex-direction: column; gap: var(--space-1); }
@@ -567,6 +574,8 @@ body.page-why .connect { text-align: center; display: flex; flex-direction: colu
   .hero-block-copy { padding-top: 0; }
   body.page-why .hero-block h1 { font-size: var(--font-size-36); }
   body.page-why .reason-grid { grid-template-columns: 1fr 1fr; }
+  .story-block { flex-direction: column; gap: var(--space-3); align-items: stretch; }
+  .story-block-text { max-width: none; }
   body.page-why .stat-row { grid-template-columns: 1fr 1fr; }
   body.page-why .culture-grid { grid-template-columns: 1fr 1fr; }
 }
@@ -593,6 +602,8 @@ body.page-why .connect { text-align: center; display: flex; flex-direction: colu
 
   body.page-why .hero-block h1 { font-size: var(--font-size-28); }
   body.page-why .reason-grid { grid-template-columns: 1fr; }
+  .story-block-images { flex-direction: column; }
+  .story-block-images img { width: 100%; }
   body.page-why .stat-row { grid-template-columns: 1fr; }
   body.page-why .culture-grid { grid-template-columns: 1fr; }
 }
