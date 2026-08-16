@@ -181,8 +181,9 @@ nav {
   text-decoration-color: var(--color-text-primary);
 }
 
-/* External-link icon (used inline next to "Resume" in both nav variants) */
-.icon-external-link { opacity: 0.55; vertical-align: middle; margin-left: 2px; }
+/* External-link icon (used inline next to "Resume" in nav, and social links in Connect) */
+.icon-external-link { opacity: 0.55; vertical-align: middle; margin-left: 2px; transition: opacity var(--ease-standard); }
+a:hover .icon-external-link { opacity: 1; }
 
 /* Pill tag — work-tag is the only background-filled pill in the system */
 .work-tag {
@@ -247,32 +248,49 @@ nav {
 
 .lang-label { font-size: var(--font-size-13); color: var(--color-text-tertiary); margin-top: 6px; }
 
-/* Mobile bottom nav bar (identical on every page once standardized —
-   index.html previously had a stray flex-column rule here with no icons
-   to justify it; removed for consistency, no visual change) */
+/* Mobile bottom nav bar (identical on every page) */
 .mobile-nav {
   display: none;
   position: fixed;
   bottom: 0; left: 0; right: 0;
   z-index: 100;
   background: var(--color-bg-canvas);
-  border-top: 1px solid var(--color-border);
-  padding: 12px 0 env(safe-area-inset-bottom, 12px);
-  justify-content: space-around;
-  align-items: center;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.06);
+  padding: 0 0 env(safe-area-inset-bottom, 0px) 0;
+  align-items: stretch;
 }
 
 .mobile-nav a {
-  font-size: var(--font-size-12);
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 12px;
+  font-size: var(--font-size-14);
   font-weight: var(--font-weight-regular);
   color: var(--color-text-primary);
   text-decoration: none;
 }
 
+/* Shrink-wraps to the label's own text/icon width, and stretches to the
+   full tab height (via the parent's default align-items: stretch) so the
+   active indicator below can size and position itself off this box alone. */
+.mobile-nav-label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
 .mobile-nav a.active {
-  text-decoration: underline;
-  text-decoration-style: solid;
-  text-underline-offset: 3px;
+  font-weight: var(--font-weight-medium);
+}
+
+.mobile-nav a.active .mobile-nav-label::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  border-top: 2px dotted var(--color-text-primary);
 }
 
 /* Connect block — inner elements (shared verbatim across all 3 pages;
@@ -287,17 +305,28 @@ nav {
   margin-top: -16px; /* micro, intentionally off-grid: pulls sub-line closer to heading */
 }
 
-.connect-links { display: flex; flex-direction: column; align-items: center; gap: var(--space-1); }
+.connect-links { display: flex; flex-direction: column; align-items: center; gap: var(--space-4); }
 
 .connect-links a {
   font-size: var(--font-size-14);
   color: var(--color-text-primary);
   text-decoration: underline;
+  text-decoration-style: dotted;
   text-underline-offset: 3px;
 }
 
 .connect-social { display: flex; gap: var(--space-3); }
-.connect-social a { font-size: var(--font-size-14); color: var(--color-text-primary); text-decoration: none; }
+.connect-social a {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--font-size-14);
+  color: var(--color-text-primary);
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--color-text-primary);
+}
 
 /* Footer (identical on every page) */
 footer {
@@ -519,7 +548,7 @@ body.page-why .connect { text-align: center; display: flex; flex-direction: colu
 @media (max-width: 600px) {
   nav { display: none; }
   .mobile-nav { display: flex; }
-  body { padding-bottom: var(--space-9); }
+  body { padding-bottom: calc(44px + env(safe-area-inset-bottom, 0px)); }
   footer { padding: var(--space-2) var(--space-page-margin-mobile); }
 
   body.page-home .hero { padding: var(--space-5) var(--space-page-margin-mobile) var(--space-4); flex-direction: column-reverse; }
