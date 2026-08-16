@@ -309,6 +309,16 @@ a:hover .icon-external-link { opacity: 1; }
   margin-top: -16px; /* micro, intentionally off-grid: pulls sub-line closer to heading */
 }
 
+/* Section subtitle — one-line descriptive text under a .section-title */
+.section-sub {
+  font-size: var(--font-size-14);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-relaxed);
+  max-width: 640px;
+  margin-top: -12px;
+  margin-bottom: var(--space-3);
+}
+
 .connect-links { display: flex; flex-direction: column; align-items: center; gap: var(--space-4); }
 
 .connect-links a {
