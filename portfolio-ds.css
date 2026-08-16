@@ -521,6 +521,9 @@ footer {
 
 /* — Why Norway: culture grid — */
 .culture-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-card-gap-tight); }
+/* Test layout: 2 columns / 2 rows, gap doubled to --space-8 (vs. the 3-col
+   grid's --space-4) for comparison against the 3-column version above. */
+.culture-grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8); }
 .culture-card { background: var(--color-bg-card); border-radius: var(--radius-card); overflow: hidden; }
 .culture-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; background: var(--color-bg-image-placeholder-2); }
 .culture-body { padding: var(--space-2); display: flex; flex-direction: column; gap: 6px; }
@@ -606,6 +609,7 @@ body.page-why .connect { text-align: center; display: flex; flex-direction: colu
   .story-block-images img { width: 100%; }
   body.page-why .stat-row { grid-template-columns: 1fr; }
   body.page-why .culture-grid { grid-template-columns: 1fr; }
+  body.page-why .culture-grid-2col { grid-template-columns: 1fr; gap: var(--space-4); }
 }
 
 @media (min-width: 601px) {
