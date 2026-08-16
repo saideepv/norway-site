@@ -265,8 +265,8 @@ a:hover .icon-external-link { opacity: 1; }
   display: flex;
   justify-content: center;
   min-height: 44px;
-  padding: 0 12px;
-  font-size: var(--font-size-14);
+  padding: 0 6px;
+  font-size: var(--font-size-12);
   font-weight: var(--font-weight-regular);
   color: var(--color-text-primary);
   text-decoration: none;
@@ -274,12 +274,16 @@ a:hover .icon-external-link { opacity: 1; }
 
 /* Shrink-wraps to the label's own text/icon width, and stretches to the
    full tab height (via the parent's default align-items: stretch) so the
-   active indicator below can size and position itself off this box alone. */
+   active indicator below can size and position itself off this box alone.
+   nowrap + the smaller font/padding above (vs. the Indian site's 3-tab bar)
+   are needed because this bar carries a 4th tab ("Why Norway") — without
+   them that label wraps to two lines and throws off the whole row's height. */
 .mobile-nav-label {
   position: relative;
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  white-space: nowrap;
 }
 
 .mobile-nav a.active {
