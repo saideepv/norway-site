@@ -240,23 +240,33 @@ a:hover .icon-external-link { opacity: 1; }
 .play-btn:hover { background: var(--color-bg-overlay-scrim-hover); }
 .play-btn svg { width: 48px; height: 48px; fill: var(--color-text-on-dark); opacity: 0.9; }
 
-/* Progress bar — language proficiency indicator */
-.lang-bar-wrap { margin-top: var(--space-half); }
+/* Step progress — language proficiency indicator: 0 -> A1 (done, solid)
+   -> A2 (in progress, diagonal-hatch), with step labels under each boundary. */
+.lang-progress { margin-top: var(--space-2); }
 
-.lang-bar {
-  height: 4px;
-  background: var(--color-bg-track);
-  border-radius: var(--radius-pill);
-  overflow: hidden;
+.lang-progress-track { display: flex; gap: 4px; height: 8px; }
+
+.lang-progress-segment { flex: 1; border-radius: var(--radius-pill); }
+
+.lang-progress-segment--done { background: var(--color-text-primary); }
+
+.lang-progress-segment--active {
+  background-color: var(--color-bg-track);
+  background-image: repeating-linear-gradient(45deg, var(--color-text-primary) 0 3px, transparent 3px 8px);
 }
 
-.lang-bar-fill {
-  height: 100%;
-  background: var(--color-text-primary);
-  border-radius: var(--radius-pill);
+.lang-progress-steps {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  font-size: var(--font-size-12);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-tertiary);
 }
 
-.lang-label { font-size: var(--font-size-13); color: var(--color-text-tertiary); margin-top: 6px; }
+.lang-progress-steps .lang-progress-current { color: var(--color-text-primary); }
+
+.lang-label { font-size: var(--font-size-13); color: var(--color-text-tertiary); margin-top: var(--space-2); }
 
 /* Mobile bottom nav bar (identical on every page) */
 .mobile-nav {
@@ -525,7 +535,9 @@ footer {
 .culture-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-card-gap-tight); }
 /* Test layout: 2 columns / 2 rows, gap doubled to --space-8 (vs. the 3-col
    grid's --space-4) for comparison against the 3-column version above. */
-.culture-grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8); }
+/* align-items: start so a short card (e.g. the Language card) sits at its own
+   natural height instead of stretching to match a taller row-mate. */
+.culture-grid-2col { display: grid; grid-template-columns: 1fr 1fr; align-items: start; gap: var(--space-8); }
 .culture-card { background: var(--color-bg-card); border-radius: var(--radius-card); overflow: hidden; }
 .culture-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; background: var(--color-bg-image-placeholder-2); }
 .culture-body { padding: var(--space-2); display: flex; flex-direction: column; gap: 6px; }
