@@ -507,11 +507,13 @@ footer {
 .reason-card p { font-size: var(--font-size-14); color: var(--color-text-secondary); line-height: var(--line-height-loose); }
 
 /* — Why Norway: story block — */
-.story-block { display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: var(--space-6); }
+.story-block { display: flex; flex-direction: row; align-items: flex-start; justify-content: space-between; gap: var(--space-6); }
 .story-block-text { max-width: 420px; flex-shrink: 0; display: flex; flex-direction: column; gap: var(--space-2); }
 .story-block-text p { font-size: var(--font-size-16); color: var(--color-text-secondary); line-height: var(--line-height-loose); }
 .story-block-images { display: flex; align-items: flex-start; gap: var(--space-3); flex: 1; }
-.story-block-images img { width: 50%; border-radius: var(--radius-card); object-fit: cover; display: block; }
+/* Fixed to the YouTube thumbnail's own aspect ratio so both images render
+   at the same height at any width, regardless of each source photo's crop. */
+.story-block-images img { width: 50%; aspect-ratio: 1080 / 836; border-radius: var(--radius-card); object-fit: cover; display: block; }
 
 /* — Why Norway: stat row — */
 .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-card-gap-tight); }
