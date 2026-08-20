@@ -35,11 +35,20 @@
   <div class="page">
 
     <!-- HERO -->
-    <div class="hero-block">
-      <h1 class="heading-48-bold">Norway is not just a destination.<br />It's a deliberate choice.</h1>
-      <div class="hero-block-copy">
-        <p>Norway offers one of the clearest, most trusted paths to residency for skilled workers, in a society built on transparency, equality, and a genuinely strong safety net. I genuinely love the culture, and I'm already learning the language.</p>
-        <p>Below are some of the numbers and cultural touchpoints that made me admire Norway even more.</p>
+    <!-- Mobile only: flag-splash (full-bleed dark-overlaid flag, 1s shine sweep,
+         plays once) sits beneath hero-block, which starts hidden below the
+         viewport and rises to cover it right as the shine finishes. Flag is
+         never seen again until reload. No-op on tablet/desktop (see portfolio-ds.css). -->
+    <div class="hero-intro-wrap">
+      <div class="flag-splash" aria-hidden="true">
+        <img src="images/Norway related/flag-of-Norway.jpg" alt="" class="flag-splash-img" />
+      </div>
+      <div class="hero-block">
+        <h1 class="heading-48-bold">Norway is not just a destination.<br />It's a deliberate choice.</h1>
+        <div class="hero-block-copy">
+          <p>Norway offers one of the clearest, most trusted paths to residency for skilled workers, in a society built on transparency, equality, and a genuinely strong safety net. I genuinely love the culture, and I'm already learning the language.</p>
+          <p>Below are some of the numbers and cultural touchpoints that made me admire Norway even more.</p>
+        </div>
       </div>
     </div>
 

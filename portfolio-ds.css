@@ -374,6 +374,11 @@ footer {
 /* ── 4. MOLECULES ──────────────────────────────────────────────────────── */
 
 /* — Home: hero — */
+@keyframes hero-entrance {
+  from { opacity: 0.5; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 .hero {
   max-width: 1440px;
   margin: 0 auto;
@@ -383,6 +388,7 @@ footer {
   align-items: flex-start;
   justify-content: space-between;
   gap: 10px; /* micro, intentionally off-grid */
+  animation: hero-entrance 0.6s ease-out both;
 }
 
 .hero-text { flex: 1; }
@@ -507,10 +513,26 @@ footer {
 .hobby-title { font-size: var(--font-size-16); font-weight: var(--font-weight-medium); color: var(--color-text-primary); }
 
 /* — Why Norway: hero — */
-.hero-block { display: flex; flex-direction: row; align-items: flex-start; justify-content: space-between; gap: var(--space-6); }
+.hero-block { display: flex; flex-direction: row; align-items: flex-start; justify-content: space-between; gap: var(--space-6); animation: hero-entrance 0.6s ease-out both; /* desktop/tablet only — mobile overrides with hero-rise below */ }
 .hero-block h1 { max-width: 560px; flex-shrink: 0; }
 .hero-block-copy { display: flex; flex-direction: column; gap: var(--space-4); padding-top: var(--space-1); }
 .hero-block p { font-size: var(--font-size-16); color: var(--color-text-secondary); line-height: var(--line-height-loose); max-width: 480px; }
+
+/* Mobile-only flag intro — hidden on desktop/tablet. Plays once on page
+   load: shine sweep (1s), then hero content rises up and covers it for
+   good. See §6 RESPONSIVE, ≤600px only. */
+.hero-intro-wrap { display: contents; }
+.flag-splash { display: none; }
+
+@keyframes flag-shine {
+  from { transform: translate(-120%, -120%); }
+  to   { transform: translate(120%, 120%); }
+}
+
+@keyframes hero-rise {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
 
 /* — Why Norway: reason cards — */
 .reason-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--space-card-gap-tight); }
@@ -558,6 +580,7 @@ body.page-home .connect { max-width: 1440px; margin: 0 auto; padding: var(--spac
 
 /* About: single flex-column .page wrapper */
 body.page-about .page { max-width: 1440px; margin: 0 auto; padding: var(--space-10) var(--space-page-margin); display: flex; flex-direction: column; gap: var(--space-10); }
+body.page-about .page > *:first-child { animation: hero-entrance 0.6s ease-out both; }
 body.page-about .section-title { font-size: var(--font-size-24); font-weight: var(--font-weight-bold); letter-spacing: var(--tracking-snug); margin-bottom: var(--space-3); }
 body.page-about .connect { text-align: center; display: flex; flex-direction: column; align-items: center; gap: var(--space-4); padding-bottom: 0; margin-top: var(--space-3); }
 
@@ -627,6 +650,69 @@ body.page-why .connect { text-align: center; display: flex; flex-direction: colu
   body.page-why .stat-row { grid-template-columns: 1fr; }
   body.page-why .culture-grid { grid-template-columns: 1fr; }
   body.page-why .culture-grid-2col { grid-template-columns: 1fr; gap: var(--space-4); }
+
+  /* Flag intro (mobile only) — sits beneath hero-block, which starts
+     completely hidden below the viewport and rises to cover it right as
+     the shine sweep finishes (1s). Plays once; flag is never seen again
+     until the page reloads. */
+  .hero-intro-wrap { display: block; position: relative; overflow: hidden; }
+
+  .flag-splash {
+    display: block;
+    position: absolute;
+    inset: 0;
+    left: 50%;
+    width: 100vw;
+    transform: translateX(-50%);
+    overflow: hidden;
+    z-index: 1;
+    background: #1a1a1a;
+  }
+
+  .flag-splash-img {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  /* Dark overlay — present immediately, not animated in */
+  .flag-splash::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.75) 100%);
+    pointer-events: none;
+  }
+
+  /* transform-only sweep (not background-position) — background-position
+     animations force a repaint every frame, which can cause this to
+     restart/replay multiple times on some mobile browsers. transform is
+     GPU-composited and doesn't have that problem (same as hero-rise below,
+     which is reliable). */
+  .flag-splash::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, 0.5) 50%, transparent 65%);
+    transform: translate(-120%, -120%);
+    animation: flag-shine 1s ease-out forwards;
+    pointer-events: none;
+  }
+
+  body.page-why .hero-block {
+    position: relative;
+    z-index: 2;
+    background: var(--color-bg-canvas);
+    animation: hero-rise 0.6s ease 1s both;
+    min-height: 55vh;
+    justify-content: center;
+  }
 }
 
 @media (min-width: 601px) {
