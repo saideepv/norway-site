@@ -639,7 +639,7 @@ body.page-why .connect { text-align: center; display: flex; flex-direction: colu
 
   body.page-home .hero { padding: var(--space-5) var(--space-page-margin-mobile) var(--space-4); flex-direction: column-reverse; }
   body.page-home .hero-photo { width: 100%; aspect-ratio: 16/9; }
-  body.page-home .hero h1 { font-size: var(--font-size-30); }
+  body.page-home .hero h1 { font-size: var(--font-size-30); line-height: var(--line-height-snug); }
   body.page-home .section { padding: var(--space-5) var(--space-page-margin-mobile); }
   body.page-home .work-card { flex-direction: column; }
   body.page-home .work-card-image { width: 100%; height: 180px; }
