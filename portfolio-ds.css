@@ -556,6 +556,14 @@ footer {
 .stat-number { font-size: var(--font-size-36); font-weight: var(--font-weight-bold); letter-spacing: -0.03em; }
 .stat-label { font-size: var(--font-size-14); color: var(--color-text-secondary); line-height: var(--line-height-normal); }
 
+/* — Why Norway: stats infographic — */
+/* Full-width 4-panel chart on desktop/tablet; on mobile the source image
+   is too dense to read at that width, so it's swapped (≤600px, see
+   §6 RESPONSIVE) for two pre-cropped halves stacked vertically instead. */
+.stats-infographic { border-radius: var(--radius-card); overflow: hidden; background: var(--color-bg-card); }
+.stats-infographic img { width: 100%; display: block; }
+.stats-infographic-mobile { display: none; flex-direction: column; gap: var(--space-3); }
+
 /* — Why Norway: culture grid — */
 .culture-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-card-gap-tight); }
 /* Test layout: 2 columns / 2 rows, gap doubled to --space-8 (vs. the 3-col
@@ -650,6 +658,8 @@ body.page-why .connect { text-align: center; display: flex; flex-direction: colu
   body.page-why .stat-row { grid-template-columns: 1fr; }
   body.page-why .culture-grid { grid-template-columns: 1fr; }
   body.page-why .culture-grid-2col { grid-template-columns: 1fr; gap: var(--space-4); }
+  .stats-infographic-full { display: none; }
+  .stats-infographic-mobile { display: flex; }
 
   /* Flag intro (mobile only) — sits beneath hero-block, which starts
      completely hidden below the viewport and rises to cover it right as
